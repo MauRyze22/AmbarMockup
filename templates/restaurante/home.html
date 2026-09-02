@@ -1,0 +1,113 @@
+{% extends 'restaurante/base.html' %}
+
+{% block title %}Ámbar — Cocina de Brasa{% endblock %}
+
+{% block content %}
+<section class="hero">
+  <div class="ember-dot" style="width:3px;height:3px;left:8%;animation-duration:9s;animation-delay:0s;"></div>
+  <div class="ember-dot" style="width:4px;height:4px;left:18%;animation-duration:11s;animation-delay:2s;"></div>
+  <div class="ember-dot" style="width:2px;height:2px;left:27%;animation-duration:8s;animation-delay:4s;"></div>
+  <div class="ember-dot" style="width:5px;height:5px;left:40%;animation-duration:13s;animation-delay:1s;"></div>
+  <div class="ember-dot" style="width:3px;height:3px;left:55%;animation-duration:10s;animation-delay:5s;"></div>
+  <div class="ember-dot" style="width:4px;height:4px;left:68%;animation-duration:12s;animation-delay:3s;"></div>
+  <div class="ember-dot" style="width:2px;height:2px;left:78%;animation-duration:9s;animation-delay:6s;"></div>
+  <div class="ember-dot" style="width:3px;height:3px;left:90%;animation-duration:11s;animation-delay:2.5s;"></div>
+  <div class="wrap">
+    <p class="eyebrow">Cocina de brasa · Desde las brasas al plato</p>
+    <h1>Fuego lento.<br><em>Sabor</em> verdadero.</h1>
+    <p>Cortes a la brasa, repostería de casa y cócteles con carácter — servidos en un salón hecho para quedarse toda la noche.</p>
+    <div class="hero-actions">
+      <a href="{% url 'menu_list' %}" class="btn btn-primary">Ver menú</a>
+      <a href="{% url 'reserva_create_1' %}" class="btn btn-ghost">Reservar mesa</a>
+    </div>
+  </div>
+  <div class="hero-cards">
+    <div class="hcard">
+      <h3>Cocina de Brasa</h3>
+      <p>Cortes y vegetales cocinados a fuego lento, con el humo como firma de la casa.</p>
+    </div>
+    <div class="hcard">
+      <h3>Repostería Artesanal</h3>
+      <p>Postres horneados cada mañana con ingredientes de temporada, sin atajos.</p>
+    </div>
+    <div class="hcard">
+      <h3>Coctelería de Autor</h3>
+      <p>Tragos de casa, frescos y con carácter, pensados para acompañar cada plato.</p>
+    </div>
+  </div>
+</section>
+
+{% if platos_destacados %}
+<section class="section" id="menu">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="eyebrow">Especialidad del chef</p>
+      <h2>Platos que definen la casa</h2>
+    </div>
+    <div class="dish-grid">
+      {% for plato in platos_destacados %}
+        <div class="dish">
+          <div class="dish-photo">
+            {% if plato.image %}<img src="{{ plato.image.url }}" alt="{{ plato.nombre }}">{% endif %}
+          </div>
+          <div class="dish-body">
+            <h3>{{ plato.nombre }}</h3>
+            <p>{{ plato.descripcion }}</p>
+            <div class="dish-foot">
+              <span class="price">${{ plato.precio }}</span>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endif %}
+
+<section class="offer">
+  <div class="offer-copy">
+    <p class="eyebrow">Para tu primera visita</p>
+    <h2>Reserva hoy y conoce la casa</h2>
+    <p>Elige tu horario en menos de un minuto — sin llamadas, sin esperas, con confirmación por correo al instante.</p>
+    <a href="{% url 'reserva_create_1' %}" class="btn btn-primary" style="align-self:flex-start;">Reservar ahora →</a>
+  </div>
+  <div class="offer-visual">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M12 2c-1 3-4 4-4 8a4 4 0 0 0 8 0c0-1.5-1-2-1-3.5 1 .5 2 2 2 4.5a5 5 0 0 1-10 0c0-4 3-5 3-9 1 1 2 2 2 3.5A2.5 2.5 0 0 0 14.5 3 4 4 0 0 1 12 2Z"/></svg>
+    <span>Cocina de brasa, todos los días</span>
+  </div>
+</section>
+
+<section class="section reserve-preview" id="reservar">
+  <div class="wrap">
+    <div class="reserve-box">
+      <p class="eyebrow" style="justify-content:center;">Mesa asegurada</p>
+      <h2>Reserva tu mesa</h2>
+      <p>Elige el servicio, cuántos son, y te mostramos al instante qué horarios quedan disponibles hoy.</p>
+      <a href="{% url 'reserva_create_1' %}" class="btn btn-dark">Empezar reserva</a>
+    </div>
+  </div>
+</section>
+
+<section class="benefits">
+  <div class="wrap">
+    <div class="benefits-grid">
+      <div class="benefit">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M9 12l2 2 4-4"/></svg>
+        <div><h4>Confirmación al instante</h4><p>Recibes aviso apenas reservas</p></div>
+      </div>
+      <div class="benefit">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2l8 4v6c0 5-3.5 8.5-8 10-4.5-1.5-8-5-8-10V6l8-4z"/></svg>
+        <div><h4>Cupo garantizado</h4><p>Tu mesa queda apartada</p></div>
+      </div>
+      <div class="benefit">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2c-1 3-4 4-4 8a4 4 0 0 0 8 0c0-1.5-1-2-1-3.5 1 .5 2 2 2 4.5a5 5 0 0 1-10 0c0-4 3-5 3-9 1 1 2 2 2 3.5A2.5 2.5 0 0 0 14.5 3 4 4 0 0 1 12 2Z"/></svg>
+        <div><h4>Cocina de brasa</h4><p>Fuego lento, todos los días</p></div>
+      </div>
+      <div class="benefit">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+        <div><h4>Horarios claros</h4><p>Desayuno, almuerzo y cena</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

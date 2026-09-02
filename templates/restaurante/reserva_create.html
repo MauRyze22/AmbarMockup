@@ -1,0 +1,31 @@
+{% extends 'restaurante/base.html' %}
+
+{% block title %}Confirma tu reserva — Ámbar{% endblock %}
+
+{% block content %}
+<section class="section">
+  <div class="wrap">
+    <div class="form-card">
+      <p class="eyebrow">Un paso más</p>
+      <h2>Elige tu horario</h2>
+      <p class="lead">Estos son los horarios de hoy para este servicio.</p>
+
+      <div class="horarios-lista">
+        {% for horario in horarios_disponibles %}
+          {% if horario.disponible %}
+            <span class="horario-chip disponible">{{ horario.hora_inicio }} – {{ horario.hora_final }}</span>
+          {% else %}
+            <span class="horario-chip agotado">{{ horario.hora_inicio }} – {{ horario.hora_final }} (agotado)</span>
+          {% endif %}
+        {% endfor %}
+      </div>
+
+      <form method="POST" action="{% url 'reserva_create' %}?menu={{ request.GET.menu }}&numero_de_personas={{ request.GET.numero_de_personas }}">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-primary">Reservar</button>
+      </form>
+    </div>
+  </div>
+</section>
+{% endblock %}

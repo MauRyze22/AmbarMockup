@@ -1,54 +1,54 @@
-# Ámbar — Restaurant Reservation System
+# Ámbar — Sistema de Reservas para Restaurante
 
-A full-stack Django application built as a portfolio piece for **Ataraxea**, a web development agency. It simulates a real restaurant website — Ámbar, Cocina de Brasa — with a working menu system and a live table reservation flow, built entirely with custom code rather than a page builder or template platform.
+Aplicación en Django construida como pieza de portafolio para **Ataraxea**, una agencia de desarrollo web. Simula el sitio de un restaurante real — Ámbar, Cocina de Brasa — con un sistema de menú funcional y un flujo de reservas en vivo, construido enteramente con código propio en lugar de un constructor de páginas o una plantilla. El enfoque del proyecto está en el backend: modelos, lógica de disponibilidad y validaciones del lado del servidor.
 
-> Ámbar is a fictional brand created for demonstration purposes. No real restaurant or business is associated with this project.
+> Ámbar es una marca ficticia creada con fines de demostración. No está asociada a ningún negocio real.
 
-## Live demo
+## Demo en vivo
 
-[Add deployed URL here once available]
+[Agregar aquí la URL una vez desplegada]
 
-## What this project demonstrates
+## Qué demuestra este proyecto
 
-Most small-business websites are built on WordPress or a similar platform. This project is the opposite case: a reservation system with real backend logic, built from scratch in Django, to show what a custom-built solution looks like when a client needs something a page builder can't easily do — dynamic availability, capacity checks, and email notifications on submission.
+La mayoría de los sitios de negocios pequeños se construyen sobre WordPress o una plataforma similar. Este proyecto es el caso contrario: un sistema de reservas con lógica real de backend, construido desde cero en Django, para mostrar cómo se ve una solución a medida cuando un cliente necesita algo que un constructor de páginas no resuelve fácilmente — disponibilidad dinámica, verificación de capacidad y notificaciones por correo al recibir una solicitud.
 
-## Features
+## Funcionalidades
 
-- **Menu system** organized by service (breakfast, lunch, dinner), each with its own schedule and dishes grouped by category.
-- **Two-step reservation flow**: the visitor first picks a service and party size, then sees only the time slots that actually have room for that many people — calculated live against existing bookings, not hardcoded.
-- **Automatic email notification** to the restaurant when a new reservation comes in, using the Resend API.
-- **Responsive layout**, including a CSS-only mobile navigation menu (no JavaScript anywhere in the frontend).
-- **Django admin** for managing categories, dishes, menus, and reservations without touching code.
+- **Sistema de menú** organizado por servicio (desayuno, almuerzo, cena), cada uno con su propio horario y platos agrupados por categoría.
+- **Flujo de reserva en dos pasos**: el visitante primero elige un servicio y la cantidad de personas, y luego solo ve los horarios que realmente tienen espacio disponible para ese grupo — calculado en el momento contra las reservas existentes, no fijo de antemano.
+- **Notificación automática por correo** al restaurante cuando llega una reserva nueva, usando la API de Resend.
+- **Diseño responsive**, incluyendo un menú de navegación mobile hecho solo con CSS (sin JavaScript en todo el frontend).
+- **Panel de administración de Django** para gestionar categorías, platos, menús y reservas sin tocar código.
 
-## Tech stack
+## Stack técnico
 
-| Layer | Technology |
+| Capa | Tecnología |
 |---|---|
 | Backend | Django 6.1 |
-| Database | SQLite (development) / PostgreSQL (production) |
-| Static files | WhiteNoise |
-| Email | Resend |
-| Deployment | Render |
-| Frontend | HTML5, CSS3 — no JS, no CSS framework |
+| Base de datos | SQLite (desarrollo) / PostgreSQL (producción) |
+| Archivos estáticos | WhiteNoise |
+| Correo | Resend |
+| Despliegue | Render |
+| Frontend | HTML5, CSS3 — sin JS, sin framework de CSS |
 
-## How the reservation logic works
+## Cómo funciona la lógica de reservas
 
-This is the part of the project I'm most proud of, so it's worth explaining briefly:
+Esta es la parte del proyecto de la que más orgulloso estoy, así que vale la pena explicarla brevemente:
 
-1. The visitor selects a menu (service) and number of people. This is a plain form — nothing is saved yet.
-2. The server calculates hourly time slots between that menu's opening and closing time, and for each slot, sums how many people are already booked in it.
-3. Only slots that still have room for the requested party size are offered as valid choices in the next form.
-4. The final reservation is only saved once a valid slot is selected, keeping capacity checks server-side rather than trusting the frontend.
+1. El visitante elige un menú (servicio) y el número de personas. Es un formulario simple — todavía no se guarda nada.
+2. El servidor calcula franjas horarias entre la hora de apertura y cierre de ese menú, y para cada franja, suma cuántas personas ya están reservadas en ella.
+3. Solo las franjas que aún tienen espacio para la cantidad de personas solicitada se ofrecen como opciones válidas en el siguiente formulario.
+4. La reserva final solo se guarda una vez que se selecciona una franja válida, manteniendo la verificación de capacidad del lado del servidor en vez de confiar en el frontend.
 
-## Project structure
+## Estructura del proyecto
 
 ```
 AmbarMockup/
 ├── restaurante/
 │   ├── models.py          # Categoria, Plato, Menu, Reserva
-│   ├── views.py           # Class-based views, two-step reservation flow
-│   ├── forms.py           # ReservaForm1 (step 1), ReservaForm2 (step 2, dynamic choices)
-│   ├── utils.py           # Email notification via Resend
+│   ├── views.py           # Vistas basadas en clases, flujo de reserva en dos pasos
+│   ├── forms.py           # ReservaForm1 (paso 1), ReservaForm2 (paso 2, opciones dinámicas)
+│   ├── utils.py           # Notificación por correo vía Resend
 │   ├── templates/restaurante/
 │   └── static/restaurante/css/
 ├── AmbarMockup/
@@ -61,13 +61,13 @@ AmbarMockup/
 └── manage.py
 ```
 
-## Running it locally
+## Cómo correrlo en local
 
-**Prerequisites:** Python 3.12+, a [Resend](https://resend.com) account for email notifications.
+**Requisitos previos:** Python 3.12+, una cuenta de [Resend](https://resend.com) para las notificaciones por correo.
 
 ```bash
-git clone https://github.com/MauRyze22/<repo-name>.git
-cd <repo-name>
+git clone https://github.com/MauRyze22/<nombre-del-repo>.git
+cd <nombre-del-repo>
 
 python -m venv venv
 venv\Scripts\activate      # Windows
@@ -76,17 +76,17 @@ source venv/bin/activate   # macOS/Linux
 pip install -r requirements.txt
 ```
 
-Create a `.env` file in the project root:
+Crea un archivo `.env` en la raíz del proyecto:
 
 ```
-SECRET_KEY=your-secret-key
+SECRET_KEY=tu-secret-key
 DEBUG=True
 ALLOWED_HOSTS=localhost,127.0.0.1
 DATABASE_URL=sqlite:///db.sqlite3
-RESEND_API_KEY=your-resend-api-key
+RESEND_API_KEY=tu-api-key-de-resend
 ```
 
-Then:
+Luego:
 
 ```bash
 python manage.py migrate
@@ -94,16 +94,16 @@ python manage.py createsuperuser
 python manage.py runserver
 ```
 
-## Deployment
+## Despliegue
 
-This project is configured for [Render](https://render.com), using Gunicorn as the WSGI server, WhiteNoise for static files, and PostgreSQL as the production database (via `dj-database-url`). In production, `DEBUG` is set to `False` and `ALLOWED_HOSTS` includes the assigned Render domain.
+Este proyecto está configurado para [Render](https://render.com), usando Gunicorn como servidor WSGI, WhiteNoise para los archivos estáticos, y PostgreSQL como base de datos de producción (vía `dj-database-url`). En producción, `DEBUG` se establece en `False` y `ALLOWED_HOSTS` incluye el dominio asignado por Render.
 
-## Possible next steps
+## Posibles próximos pasos
 
-- Per-table capacity instead of a single capacity value per menu.
-- A staff-facing dashboard to confirm or reject reservations manually.
-- Support for deposits on large-party bookings.
+- Capacidad por mesa individual en vez de un valor de capacidad único por menú.
+- Un panel para el personal donde confirmar o rechazar reservas manualmente.
+- Soporte para depósitos en reservas de grupos grandes.
 
-## About
+## Sobre este proyecto
 
-Built by [Amaury](https://github.com/MauRyze22) for **Ataraxea**.
+Construido por [Amaury](https://github.com/MauRyze22) para **Ataraxea**.

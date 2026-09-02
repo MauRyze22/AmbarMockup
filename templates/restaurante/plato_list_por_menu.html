@@ -1,0 +1,42 @@
+{% extends 'restaurante/base.html' %}
+
+{% block title %}Platos — Ámbar{% endblock %}
+
+{% block content %}
+<section class="section">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="eyebrow">Especialidad del chef</p>
+      <h2>Platos de este menú</h2>
+      <a href="{% url 'menu_list' %}" style="font-size:13px;font-weight:600;color:var(--ember);">← Volver al menú</a>
+    </div>
+
+    <div class="dish-grid">
+      {% for plato in plato_list %}
+        <div class="dish">
+          <div class="dish-photo">
+            {% if plato.image %}
+              <img src="{{ plato.image.url }}" alt="{{ plato.nombre }}">
+            {% endif %}
+          </div>
+          <div class="dish-body">
+            <h3>{{ plato.nombre }}</h3>
+            <p>{{ plato.descripcion }}</p>
+            {% if plato.categoria %}
+              <span class="badge badge-si">{{ plato.categoria }}</span>
+            {% endif %}
+            <div class="dish-foot">
+              <span class="price">${{ plato.precio }}</span>
+              {% if not plato.disponible %}
+                <span class="badge badge-no">Agotado</span>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+      {% empty %}
+        <p>Este menú todavía no tiene platos cargados.</p>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endblock %}

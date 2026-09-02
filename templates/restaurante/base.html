@@ -1,0 +1,98 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{% block title %}Ámbar — Cocina de Brasa{% endblock %}</title>
+<link rel="stylesheet" href="{% static 'restaurante/css/style.css' %}">
+</head>
+<body>
+<div class="page-wrap">
+
+  <header>
+    <div class="wrap">
+      <nav>
+        <a class="logo" href="{% url 'home_view' %}">
+          <span class="logo-mark">A</span>
+          <span class="logo-word">ÁMBAR</span>
+        </a>
+        <ul class="nav-links">
+          <li><a href="{% url 'home_view' %}">Inicio</a></li>
+          <li><a href="{% url 'menu_list' %}">Menú</a></li>
+          <li><a href="{% url 'reserva_create_1' %}">Reservar</a></li>
+        </ul>
+        <label class="menu-toggle" for="nav-toggle" aria-label="Abrir menú">☰</label>
+      </nav>
+    </div>
+    <input type="checkbox" id="nav-toggle" class="nav-toggle-input">
+    <ul class="nav-links-mobile">
+      <li><a href="{% url 'home_view' %}">Inicio</a></li>
+      <li><a href="{% url 'menu_list' %}">Menú</a></li>
+      <li><a href="{% url 'reserva_create_1' %}">Reservar</a></li>
+    </ul>
+  </header>
+
+  {% if messages %}
+    <ul class="messages wrap" style="margin-top:0;">
+      {% for message in messages %}
+        <li>{{ message }}</li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+
+  <main>
+    {% block content %}{% endblock %}
+  </main>
+
+  <footer id="historia">
+    <div class="wrap">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <div class="logo"><span class="logo-mark">A</span><span class="logo-word">ÁMBAR</span></div>
+          <p>Buena comida, buen ánimo. Cocina de brasa en un salón hecho para quedarse.</p>
+          <div class="socials"><a href="#">ig</a><a href="#">fb</a><a href="#">tw</a></div>
+        </div>
+        <div>
+          <h5>Enlaces</h5>
+          <ul>
+            <li><a href="{% url 'home_view' %}">Inicio</a></li>
+            <li><a href="{% url 'menu_list' %}">Menú</a></li>
+            <li><a href="{% url 'reserva_create_1' %}">Reservas</a></li>
+          </ul>
+        </div>
+        <div>
+          <h5>Nuestro Menú</h5>
+          <ul>
+            <li><a href="{% url 'menu_list' %}">Desayuno</a></li>
+            <li><a href="{% url 'menu_list' %}">Almuerzo</a></li>
+            <li><a href="{% url 'menu_list' %}">Cena</a></li>
+          </ul>
+        </div>
+        <div>
+          <h5>Contacto</h5>
+          <ul>
+            <li>Calle del Fuego 123, Ciudad Sabor</li>
+            <li>+1 234 567 8900</li>
+            <li>hola@ambarcocina.com</li>
+          </ul>
+        </div>
+        <div>
+          <h5>Newsletter</h5>
+          <p style="font-size:13px;color:rgba(247,241,230,0.55);margin-bottom:12px;">Recibe nuestras ofertas y novedades.</p>
+          <div class="newsletter-form" style="display:flex;border:1px solid var(--line-dark);">
+            <input type="email" placeholder="Tu correo" style="flex:1;background:transparent;border:none;padding:12px 14px;color:var(--paper);font-family:'Sora',sans-serif;font-size:13px;">
+            <button type="button" style="background:var(--ember);color:#fff;border:none;padding:0 18px;font-size:13px;font-weight:600;cursor:default;">Enviar</button>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© 2026 Ámbar Cocina de Brasa. Marca ficticia — pieza de referencia de Ataraxea.</span>
+        <span>Privacidad · Términos y Condiciones</span>
+      </div>
+    </div>
+  </footer>
+
+</div>
+</body>
+</html>

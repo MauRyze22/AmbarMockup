@@ -1,0 +1,32 @@
+{% extends 'restaurante/base.html' %}
+
+{% block title %}Menú — Ámbar{% endblock %}
+
+{% block content %}
+<section class="section">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="eyebrow">Nuestra carta</p>
+      <h2>Un menú para cada momento del día</h2>
+      <p>Elige un servicio para ver sus platos.</p>
+    </div>
+
+    <div class="menu-grid">
+      {% for menu in menu_list %}
+        <div class="menu-card">
+          <h3>{{ menu.servicio }}</h3>
+          <p class="horario">{{ menu.horario_inicio|time:"H:i" }} – {{ menu.horario_fin|time:"H:i" }}</p>
+          {% if menu.disponible %}
+            <span class="badge badge-si">Disponible hoy</span>
+          {% else %}
+            <span class="badge badge-no">No disponible</span>
+          {% endif %}
+          <a href="{% url 'plato_list_por_menu' menu.pk %}">Ver platos →</a>
+        </div>
+      {% empty %}
+        <p>Todavía no hay menús cargados.</p>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endblock %}
