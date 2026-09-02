@@ -49,8 +49,8 @@ AmbarMockup/
 │   ├── views.py           # Vistas basadas en clases, flujo de reserva en dos pasos
 │   ├── forms.py           # ReservaForm1 (paso 1), ReservaForm2 (paso 2, opciones dinámicas)
 │   ├── utils.py           # Notificación por correo vía Resend
-│   ├── templates/restaurante/
 │   └── static/restaurante/css/
+├── templates/restaurante/
 ├── AmbarMockup/
 │   ├── settings.py
 │   ├── urls.py
