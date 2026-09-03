@@ -39,7 +39,7 @@ class Menu(models.Model):
     def __str__(self):
         return f'Menu de {self.servicio}'
 
-    def horarios_disponibles(self, personas_de_reserva):
+    def horarios_disponibles(self, personas_de_reserva, dia):
         inicio_d = datetime.combine(date.today(), self.horario_inicio)
         tiempo_fin = datetime.combine(date.today(), self.horario_fin)
         horarios = []
@@ -51,17 +51,36 @@ class Menu(models.Model):
 
             capacidad_total_actual = self.reservas.filter(
                 hora_reserva__gte = franja_inicio,
-                hora_reserva__lt = franja_final
+                hora_reserva__lt = franja_final,
+                fecha_reserva = dia
             ).aggregate(total=Sum('numero_de_personas', default=0))
 
             horarios.append({'hora_inicio': franja_inicio.time(),
                                 'hora_final': franja_final.time(),
-                                'disponible': self.capacidad_maxima >= capacidad_total_actual['total'] + personas_de_reserva}
+                                'fecha_reserva': dia,
+                                'disponible': self.capacidad_maxima >= capacidad_total_actual['total'] + int(personas_de_reserva)}
             )
 
             inicio_d += timedelta(hours=1)
             
         return horarios
+
+    def fechas_disponibles(self, numero_de_personas):
+        dia_hoy = datetime.today()
+        dias_totales = datetime.today() + timedelta(days=13)
+        dias_disponibles = []
+        while dia_hoy <= dias_totales:
+            horarios = self.horarios_disponibles(numero_de_personas, dia_hoy.date())
+
+            for dia in horarios:
+                if dia['disponible']:
+                    dias_disponibles.append(dia_hoy.date())
+                    break
+
+            dia_hoy += timedelta(days=1)
+            
+        return dias_disponibles
+
     
 
 class Reserva(models.Model):
@@ -70,6 +89,7 @@ class Reserva(models.Model):
     numero_de_personas = models.PositiveSmallIntegerField()
     menu = models.ForeignKey(Menu, on_delete=models.CASCADE, related_name = 'reservas')
     hora_reserva = models.TimeField()
+    fecha_reserva = models.DateField()
 
     def __str__(self):
         return f'Reserva de {self.nombre_cliente}'

@@ -11,10 +11,11 @@ class ReservaForm2(forms.ModelForm):
 
     class Meta:
         model = Reserva
-        fields = ['nombre_cliente', 'numero_cliente', 'hora_reserva', 'menu', 'numero_de_personas']
+        fields = ['nombre_cliente', 'numero_cliente', 'hora_reserva', 'menu', 'numero_de_personas', 'fecha_reserva']
         widgets = {
             'menu': forms.HiddenInput(),
-            'numero_de_personas': forms.HiddenInput()
+            'numero_de_personas': forms.HiddenInput(),
+            'fecha_reserva': forms.HiddenInput()
         }
 
 class ReservaForm1(forms.Form):

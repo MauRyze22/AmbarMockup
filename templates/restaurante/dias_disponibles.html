@@ -1,0 +1,28 @@
+{% extends 'restaurante/base.html' %}
+
+{% block title %}Elige tu día — Ámbar{% endblock %}
+
+{% block content %}
+<section class="section">
+  <div class="wrap">
+    <div class="form-card" style="max-width:760px;">
+      <p class="eyebrow">Un paso más</p>
+      <h2>¿Qué día prefieres?</h2>
+      <p class="lead">Estos son los próximos días con disponibilidad para este servicio.</p>
+
+      <div class="dias-grid">
+        {% for dia in fechas_disponibles %}
+          <a class="dia-card"
+             href="{% url 'reserva_create' %}?menu={{ menu }}&numero_de_personas={{ numero_de_personas }}&dia={{ dia|date:"Y-m-d" }}">
+            <span class="dia-mes">{{ dia|date:"M" }}</span>
+            <span class="dia-numero">{{ dia|date:"d" }}</span>
+            <span class="dia-semana">{{ dia|date:"D" }}</span>
+          </a>
+        {% empty %}
+          <p>No hay días disponibles en los próximos 14 días para este servicio y esta cantidad de personas.</p>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

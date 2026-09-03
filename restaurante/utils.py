@@ -15,5 +15,6 @@ def enviar_correo_reserva(reserva):
             <p><strong>Personas incluidas en la reserva: {reserva.numero_de_personas}</strong></p>
             <p><strong>Menu: {reserva.menu}</strong></p>
             <p><strong>Horario de la reserva: {reserva.hora_reserva}</strong></p>
+            <p><strong>Fecha de la reserva: {reserva.fecha_reserva}</strong></p>
         """
     })

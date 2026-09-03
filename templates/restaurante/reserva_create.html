@@ -6,9 +6,9 @@
 <section class="section">
   <div class="wrap">
     <div class="form-card">
-      <p class="eyebrow">Un paso más</p>
+      <p class="eyebrow">Último paso</p>
       <h2>Elige tu horario</h2>
-      <p class="lead">Estos son los horarios de hoy para este servicio.</p>
+      <p class="lead">Estos son los horarios disponibles para el {{ fecha_reserva|date:"l j \d\e F" }}.</p>
 
       <div class="horarios-lista">
         {% for horario in horarios_disponibles %}
@@ -20,7 +20,7 @@
         {% endfor %}
       </div>
 
-      <form method="POST" action="{% url 'reserva_create' %}?menu={{ request.GET.menu }}&numero_de_personas={{ request.GET.numero_de_personas }}">
+      <form method="POST" action="{% url 'reserva_create' %}?menu={{ request.GET.menu }}&numero_de_personas={{ request.GET.numero_de_personas }}&dia={{ request.GET.dia }}">
         {% csrf_token %}
         {{ form.as_p }}
         <button type="submit" class="btn btn-primary">Reservar</button>

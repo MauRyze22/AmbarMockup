@@ -5,6 +5,7 @@ from .forms import ReservaForm1, ReservaForm2
 from django.urls import reverse_lazy
 from django.contrib import messages
 from .utils import enviar_correo_reserva
+from datetime import date
 
 # Create your views here.
 
@@ -44,7 +45,7 @@ class ReservaCreate1(generic.FormView):
         return super().form_valid(form)
 
     def get_success_url(self):
-        base_url = reverse_lazy('reserva_create')
+        base_url = reverse_lazy('dia_disponible')
         return f"{base_url}?menu={self.menu_id}&numero_de_personas={self.numero_de_personas}"
         
     
@@ -53,12 +54,18 @@ class ReservaCreate(generic.CreateView):
     form_class = ReservaForm2
     template_name = 'restaurante/reserva_create.html'
 
+    def convercion_a_date(self):
+        dia_string = self.request.GET.get('dia')
+        dia = date.fromisoformat(dia_string)
+
+        return dia
+
     def obtener_horarios(self):
         menu_id = self.request.GET.get('menu')
-        numero_personas = int(self.request.GET.get('numero_de_personas'))
+        numero_personas = self.request.GET.get('numero_de_personas')
         menu = get_object_or_404(Menu, id = menu_id)
 
-        return menu.horarios_disponibles(numero_personas)
+        return menu.horarios_disponibles(numero_personas, self.convercion_a_date())
 
     def setup(self, request, *args, **kwargs):
         super().setup(request, *args, **kwargs)
@@ -76,7 +83,8 @@ class ReservaCreate(generic.CreateView):
         kwargs['horarios'] = self.horarios_disponibles
         kwargs['initial'] = {
             'menu': self.request.GET.get('menu'),
-            'numero_de_personas': self.request.GET.get('numero_de_personas')
+            'numero_de_personas': self.request.GET.get('numero_de_personas'),
+            'fecha_reserva': self.convercion_a_date()
         }
         return kwargs
 
@@ -89,4 +97,22 @@ class ReservaCreate(generic.CreateView):
     
     def get_success_url(self):
         return reverse_lazy('home_view')
+
+
+class DiasView(generic.TemplateView):
+    template_name = 'restaurante/dias_disponibles.html'
     
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        menu_id = self.request.GET.get('menu')
+        numero_de_personas = self.request.GET.get('numero_de_personas')
+        menu = get_object_or_404(Menu, id = menu_id)
+
+        context['fechas_disponibles'] = menu.fechas_disponibles(numero_de_personas)
+        context['menu'] = menu_id
+        context['numero_de_personas'] = numero_de_personas
+
+        return context
+
