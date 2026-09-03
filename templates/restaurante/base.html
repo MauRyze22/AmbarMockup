@@ -25,11 +25,8 @@
         </span>
       </a>
       <ul class="nav-links" id="nav-links">
-        <li><a href="#brasa">Brasa</a></li>
-        <li><a href="#reposteria">Repostería</a></li>
+        <li><a href="{% url 'home_view' %}">Inicio</a></li>
         <li><a href="{% url 'menu_list' %}">Menú</a></li>
-        <li><a href="#historia">Nuestra Historia</a></li>
-        <li><a href="#locales">Locales</a></li>
         <li><a href="{% url 'reserva_create_1' %}">Reservar</a></li>
       </ul>
       <div class="nav-cta">
@@ -79,7 +76,7 @@
       </div>
       <div>
         <h5>Enlaces</h5>
-        <ul><li><a href="#historia">Sobre Nosotros</a></li><li><a href="{% url 'menu_list' %}">Menú</a></li><li><a href="{% url 'reserva_create_1' %}">Reservas</a></li><li><a href="#">Galería</a></li><li><a href="#">Blog</a></li></ul>
+        <ul><li><a href="{% url 'home_view' %}">Inicio</a></li><li><a href="{% url 'menu_list' %}">Menú</a></li><li><a href="{% url 'reserva_create_1' %}">Reservas</a></li></ul>
       </div>
       <div>
         <h5>Nuestro Menú</h5>
@@ -88,11 +85,6 @@
       <div>
         <h5>Contacto</h5>
         <ul><li>Calle del Fuego 123, Ciudad Sabor</li><li>+1 234 567 8900</li><li>hola@ambarcocina.com</li></ul>
-      </div>
-      <div>
-        <h5>Newsletter</h5>
-        <p style="font-size:13px;color:rgba(247,241,230,0.55);margin-bottom:12px;">Recibe nuestras ofertas y novedades.</p>
-        <div class="newsletter-form"><input type="email" placeholder="Tu correo"><button>Enviar</button></div>
       </div>
     </div>
     <div class="footer-bottom">
