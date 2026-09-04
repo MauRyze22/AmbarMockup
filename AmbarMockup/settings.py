@@ -38,7 +38,9 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
+    'cloudinary_storage',
     'django.contrib.staticfiles',
+    'cloudinary',
     'restaurante',
     
 ]
@@ -77,16 +79,17 @@ WSGI_APPLICATION = 'AmbarMockup.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
 
-#if DEBUG:
-#        'default': {
-   #         'ENGINE': 'django.db.backends.sqlite3',
-     #       'NAME': BASE_DIR / 'db.sqlite3',
-   #     }
-  #  }
-#else:
-DATABASES={
-    'default': dj_database_url.config(default=config("DATABASE_URL"))
-}
+if DEBUG:
+    DATABASES= {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
+    }
+else:
+    DATABASES={
+        'default': dj_database_url.config(default=config("DATABASE_URL"))
+    }
 
 
 
@@ -135,7 +138,7 @@ STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 STORAGES = {
     "default": {
-        "BACKEND": "django.core.files.storage.FileSystemStorage",
+        "BACKEND": "cloudinary_storage.storage.MediaCloudinaryStorage",
     },
     "staticfiles": {
         "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
@@ -152,3 +155,9 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = config('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD =  config('EMAIL_HOST_PASSWORD')
+
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': config('CLOUDINARY_CLOUD_NAME'),
+    'API_KEY': config('CLOUDINARY_API_KEY'),
+    'API_SECRET': config('CLOUDINARY_API_SECRET'),
+}
